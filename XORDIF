@@ -1,0 +1,31 @@
+for t in range(int(input())):
+    a,b=map(int,input().split())
+    if a==b:
+        print(0)
+    else:
+        x=0
+        min_val=min(a,b)
+        max_val=max(a,b)
+        binary_max=bin(max_val)[2:][::-1]
+        binary_min=bin(min_val)[2:][::-1]
+        prev_difference=2**30
+        new_difference=max_val-min_val
+        iteration=0
+        while iteration<len(binary_max):
+            value=2**iteration
+            if (iteration<len(binary_min) and binary_min[iteration]=="1"):
+                iteration+=1
+                continue
+            elif new_difference>=value and binary_max[iteration]=="1":
+                max_val-=value
+                min_val+=value
+                new_difference=abs(max_val-min_val)
+                if new_difference<prev_difference:
+                    x+=value
+                    prev_difference=new_difference
+                else:
+                    break
+                iteration+=1
+            else:
+                iteration+=1
+        print(x)
